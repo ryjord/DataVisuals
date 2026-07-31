@@ -1,0 +1,11 @@
+# Core analysis and plotting
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+seaborn>=0.13
+scipy>=1.10
+
+# Spreadsheet readers. pandas needs these to open the formats the tool
+# advertises: openpyxl for .xlsx/.xls, odfpy for the .ods engine.
+openpyxl>=3.1
+odfpy>=1.4
