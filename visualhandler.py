@@ -46,14 +46,14 @@ def column_identification(table):
     
     # Display results in a more readable format
     print("\n Column Classification Results:")
-    print(f"  ⏱️  Time-based: {', '.join(timestamp_columns) if timestamp_columns else 'None'}")
-    print(f"  🔢 Numerical: {', '.join(numerical_columns) if numerical_columns else 'None'}")
-    print(f"  📝 Categorical: {', '.join(categorical_columns) if categorical_columns else 'None'}")
+    print(f"  ⏱Time-based: {', '.join(timestamp_columns) if timestamp_columns else 'None'}")
+    print(f" Numerical: {', '.join(numerical_columns) if numerical_columns else 'None'}")
+    print(f" Categorical: {', '.join(categorical_columns) if categorical_columns else 'None'}")
     
     # Get user confirmation
-    confirm_columns = input("\n✅ Is this classification correct? (y/n) >>> ").strip().lower()
+    confirm_columns = input("\nIs this classification correct? (y/n) >>> ").strip().lower()
     if confirm_columns != 'y':
-        print("🛑 Operation cancelled. Please check your data and try again.")
+        print("Operation cancelled. Please check your data and try again.")
         return None, None, None, None, None
     
     return timestamp_columns, categorical_columns, numerical_columns, filename, df
@@ -74,7 +74,7 @@ def handle_single_table_visualization(table):
     if df is None:
         return
     
-    print("\n🎨 Creating visualizations...")
+    print("\nCreating visualizations...")
     
     # Call the visualization function from singletablehandler
     figures = visualise_single_table(timestamp_columns, categorical_columns, numerical_columns, filename, df)
@@ -83,7 +83,7 @@ def handle_single_table_visualization(table):
     if figures:
         save_visualisation_to_pdf(figures, filename)
     else:
-        print("ℹ️ No visualizations were generated.")
+        print("ℹNo visualizations were generated.")
 
 
 
@@ -100,7 +100,7 @@ def handle_single_table_analysis(table):
     if df is None:
         return
     
-    print("\n📊 Performing data analysis...")
+    print("\nPerforming data analysis...")
     
     # Call the analysis function from singletablehandler
     figures = analyse_single_table(timestamp_columns, categorical_columns, numerical_columns, filename, df)
@@ -109,7 +109,7 @@ def handle_single_table_analysis(table):
     if figures:
         save_visualisation_to_pdf(figures, filename)
     else:
-        print("ℹ️ No analysis visualizations were generated.")
+        print("ℹNo analysis visualizations were generated.")
 
         
 # handles the data detection and guides the user through analysis options
@@ -119,12 +119,12 @@ def data_detection(selected_data):
     Handles both single and multiple table scenarios.
     """
     if not selected_data:
-        print("❌ No data selected for processing.")
+        print("No data selected for processing.")
         return None
     
     # Single table processing
     elif len(selected_data) == 1:
-        print("\n🔍 Single table detected")
+        print("\nSingle table detected")
         
         # Provide clear options to the user
         print("\nWhat would you like to do with this data?")
@@ -138,11 +138,11 @@ def data_detection(selected_data):
         elif choice == 'a':
             handle_single_table_analysis(selected_data[0])
         else:
-            print("❌ Invalid option. Please enter 'v' for visualize or 'a' for analyze.")
+            print("Invalid option. Please enter 'v' for visualize or 'a' for analyze.")
     
     # Multiple table processing
     else:
-        print(f"\n🔍 {len(selected_data)} tables detected")
+        print(f"\n{len(selected_data)} tables detected")
         
         # Provide clear options to the user
         print("\nWhat would you like to do with these tables?")
@@ -156,7 +156,7 @@ def data_detection(selected_data):
         elif choice == 'a':
             handle_multiple_table_analysis(selected_data)
         else:
-            print("❌ Invalid option. Please enter 'v' for visualize or 'a' for analyze.")
+            print("Invalid option. Please enter 'v' for visualize or 'a' for analyze.")
 
 
 
@@ -169,7 +169,7 @@ def save_visualisation_to_pdf(figures, filename='visualisation'):
     if not figures:
         return
         
-    print("\n💾 Save Options")
+    print("\nSave Options")
     save_option = input("Would you like to save these visualizations to PDF? (y/n) >>> ").strip().lower()
     
     if save_option == 'y':
@@ -189,9 +189,9 @@ def save_visualisation_to_pdf(figures, filename='visualisation'):
             for fig in figures:
                 pdf.savefig(fig)
         
-        print(f"✅ Visualizations saved to: {output_file}")
+        print(f"Visualizations saved to: {output_file}")
     else:
-        print("ℹ️ Visualizations not saved.")
+        print("ℹVisualizations not saved.")
 
 
 
@@ -202,7 +202,7 @@ def handle_multiple_table_visualization(tables):
     Prepares and calls the visualization function for multiple tables.
     Handles user feedback and visualization saving.
     """
-    print("\n🎨 Creating multi-table visualizations...")
+    print("\nCreating multi-table visualizations...")
     
     # Call the visualization function from multitablehandler
     figures = visualise_multiple_tables(tables)
@@ -213,7 +213,7 @@ def handle_multiple_table_visualization(tables):
         base_filename = "_".join([table[0].split('.')[0] for table in tables])
         save_visualisation_to_pdf(figures, f"multi_{base_filename}")
     else:
-        print("ℹ️ No multi-table visualizations were generated.")
+        print("ℹNo multi-table visualizations were generated.")
 
 
 # handles the analysis of multiple tables
@@ -222,7 +222,7 @@ def handle_multiple_table_analysis(tables):
     Prepares and calls the analysis function for multiple tables.
     Handles user feedback and visualization saving.
     """
-    print("\n📊 Performing multi-table data analysis...")
+    print("\nPerforming multi-table data analysis...")
     
     # Call the analysis function from multitablehandler
     figures = analyse_multiple_tables(tables)
@@ -233,7 +233,7 @@ def handle_multiple_table_analysis(tables):
         base_filename = "_".join([table[0].split('.')[0] for table in tables])
         save_visualisation_to_pdf(figures, f"multi_analysis_{base_filename}")
     else:
-        print("ℹ️ No multi-table analysis visualizations were generated.")
+        print("ℹNo multi-table analysis visualizations were generated.")
 
 
 # main function to run the script
@@ -241,36 +241,36 @@ if __name__ == "__main__":
     """Main execution flow with improved user guidance and feedback"""
     # Display welcome header
     print("\n" + "=" * 70)
-    print("🚀 Welcome to DataVisuals - Data Visualization and Analysis Tool 📊")
+    print("Welcome to DataVisuals - Data Visualization and Analysis Tool")
     print("=" * 70)
     
     # Step 1: Import data files with clear guidance
-    print("\n📂 STEP 1: Import Data Files")
+    print("\nSTEP 1: Import Data Files")
     print("Select the data files you want to analyze")
     file_list = import_data()
     
     if not file_list:
-        print("❌ No valid data files were found. Please check your data and try again.")
+        print("No valid data files were found. Please check your data and try again.")
     else:
-        print(f"\n✅ Found {len(file_list)} valid data file(s)")
+        print(f"\nFound {len(file_list)} valid data file(s)")
         
         # Step 2: Select tables with clear guidance
-        print("\n📋 STEP 2: Select Tables")
+        print("\nSTEP 2: Select Tables")
         print("Choose which tables you want to work with")
         selected_data = get_tables(file_list)
         
         if not selected_data:
-            print("❌ No tables were selected. Exiting.")
+            print("No tables were selected. Exiting.")
         else:
             # Step 3: Select columns with clear guidance
-            print("\n🔍 STEP 3: Select Columns")
+            print("\nSTEP 3: Select Columns")
             print("Choose which columns to include in your analysis")
             projected_data = projection_columns(selected_data)
             
             # Step 4: Choose visualization or analysis
             if projected_data:
-                print("\n📊 STEP 4: Analysis Options")
+                print("\nSTEP 4: Analysis Options")
                 data_detection(projected_data)
     
     # Closing message
-    print("\n🙏 Thank you for using DataVisuals!")
+    print("\nThank you for using DataVisuals!")

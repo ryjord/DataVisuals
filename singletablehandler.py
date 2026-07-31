@@ -20,7 +20,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
     if df is None:
         return None
         
-    print("📊 Columns confirmed. Proceeding with visualization...")
+    print("Columns confirmed. Proceeding with visualization...")
     created_figures = []  # Track created figures for return
 
     """
@@ -37,7 +37,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
         fig_num = plt.figure(figsize=(15, 10)).number
         created_figures.append(fig_num)
         
-        print("📈 Creating histograms for numerical columns...")
+        print("Creating histograms for numerical columns...")
         
         # Calculate optimal grid layout
         n_plots = len(numerical_columns)
@@ -80,7 +80,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
         plt.tight_layout()
         plt.suptitle(f"Numerical Distributions in {filename}", fontsize=16, y=1.02)
     else:
-        print("ℹ️ No numerical columns found for histogram visualization.")
+        print("ℹNo numerical columns found for histogram visualization.")
 
     # 1.2 Bar charts for categorical data
     if categorical_columns:
@@ -88,7 +88,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
         fig_num = plt.figure(figsize=(15, 10)).number
         created_figures.append(fig_num)
         
-        print("📊 Creating bar charts for categorical columns...")
+        print("Creating bar charts for categorical columns...")
         
         # Calculate optimal grid layout
         n_plots = len(categorical_columns)
@@ -143,7 +143,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
         fig_num = plt.figure(figsize=(15, 10)).number
         created_figures.append(fig_num)
         
-        print("📈 Creating time series plots...")
+        print("Creating time series plots...")
         
         # For each timestamp column, plot against numerical columns
         for time_col in timestamp_columns:
@@ -209,7 +209,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
     """
     # 3.1 Scatter plots for numerical vs numerical
     if len(numerical_columns) >= 2:
-        print("🔍 Finding related numerical columns for scatter plots...")
+        print("Finding related numerical columns for scatter plots...")
         
         # Calculate correlation matrix
         corr_matrix = df[numerical_columns].corr().abs()
@@ -235,7 +235,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
             fig_num = plt.figure(figsize=(15, 10)).number
             created_figures.append(fig_num)
             
-            print(f"📊 Creating scatter plots for {min(3, len(correlated_pairs))} correlated pairs...")
+            print(f"Creating scatter plots for {min(3, len(correlated_pairs))} correlated pairs...")
             
             for i, (col1, col2, corr) in enumerate(correlated_pairs[:3]):
                 plt.subplot(1, min(3, len(correlated_pairs)), i+1)
@@ -254,11 +254,11 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
             plt.tight_layout()
             plt.suptitle(f"Correlated Numerical Features in {filename}", fontsize=16, y=1.02)
         else:
-            print("ℹ️ No strongly correlated numerical columns found (correlation threshold: 0.5)")
+            print("ℹNo strongly correlated numerical columns found (correlation threshold: 0.5)")
     
     # 3.2 Box plots for numerical data by categorical
     if numerical_columns and categorical_columns:
-        print("🔍 Finding meaningful relationships between categorical and numerical data...")
+        print("Finding meaningful relationships between categorical and numerical data...")
         
         def calculate_relationship_strength(df, cat_col, num_col):
             """Calculate how strongly a categorical variable affects a numerical one"""
@@ -316,7 +316,7 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
             fig_num = plt.figure(figsize=(15, 10)).number
             created_figures.append(fig_num)
             
-            print(f"📊 Creating box plots for {min(3, len(relationships))} categorical-numerical relationships...")
+            print(f"Creating box plots for {min(3, len(relationships))} categorical-numerical relationships...")
             
             for i, (cat_col, num_col, strength) in enumerate(relationships[:3]):
                 plt.subplot(1, min(3, len(relationships)), i+1)
@@ -360,13 +360,13 @@ def visualise_single_table(timestamp_columns, categorical_columns, numerical_col
             plt.tight_layout()
             plt.suptitle(f"Categorical-Numerical Relationships in {filename}", fontsize=16, y=1.02)
         else:
-            print("ℹ️ No strong categorical-numerical relationships found")
+            print("ℹNo strong categorical-numerical relationships found")
     
     # Ensure all plots are shown
     plt.tight_layout()
     plt.show()
     
-    print(f"✅ Created {len(created_figures)} visualization figures for {filename}")
+    print(f"Created {len(created_figures)} visualization figures for {filename}")
     return created_figures
 
 
@@ -379,7 +379,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
     if df is None:
         return None
         
-    print("📊 Columns confirmed. Proceeding with analysis...")
+    print("Columns confirmed. Proceeding with analysis...")
     created_figures = []  # Track created figures for return
     
 
@@ -389,11 +389,11 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
 
     """
 
-    print("\n📈 === Summary Statistics ===")
+    print("\n=== Summary Statistics ===")
     
     # 1.1 Numerical column statistics
     if numerical_columns:
-        print("\n🔢 Numerical Columns:")
+        print("\nNumerical Columns:")
         summary_stats = df[numerical_columns].describe().T
         
         # Add more statistics to the summary
@@ -406,7 +406,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
         print(summary_stats)
         
         # Print interpretations for skewness and kurtosis
-        print("\n📊 Distribution Analysis:")
+        print("\nDistribution Analysis:")
         for col in numerical_columns:
             skew_val = summary_stats.loc[col, 'skew']
             kurt_val = summary_stats.loc[col, 'kurtosis']
@@ -436,7 +436,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
     
     # 1.2 Categorical column statistics
     if categorical_columns:
-        print("\n📝 Categorical Columns:")
+        print("\nCategorical Columns:")
         for col in categorical_columns:
             unique_count = df[col].nunique()
             most_common = df[col].value_counts().nlargest(3)
@@ -454,7 +454,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
     
     # 1.3 Timestamp column statistics
     if timestamp_columns:
-        print("\n⏱️ Timestamp Columns:")
+        print("\n⏱Timestamp Columns:")
         for col in timestamp_columns:
             try:
                 # Convert to datetime if not already
@@ -507,7 +507,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
 
     # 2.1 Correlation analysis for numerical columns
     if len(numerical_columns) >= 2:
-        print("\n🔄 === Correlation Analysis ===")
+        print("\n=== Correlation Analysis ===")
         correlation_matrix = df[numerical_columns].corr()
         print("\nCorrelation Matrix:")
         print(correlation_matrix.round(2))
@@ -522,7 +522,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
         plt.tight_layout()
         
         # Find highly correlated pairs
-        print("\n🔍 Highly Correlated Features:")
+        print("\nHighly Correlated Features:")
         corr_pairs = []
         for i in range(len(numerical_columns)):
             for j in range(i+1, len(numerical_columns)):
@@ -549,7 +549,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
 
     """
 
-    print("\n🔍 === Missing Values Analysis ===")
+    print("\n=== Missing Values Analysis ===")
     missing_values = df.isnull().sum()
     missing_percent = (missing_values / len(df)) * 100
     missing_data = pd.DataFrame({'Missing Values': missing_values, 
@@ -590,7 +590,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
         plt.suptitle(f'Missing Values Analysis - {filename}', fontsize=16, y=1.02)
         
         # Suggest potential reasons for missing data
-        print("\n🔍 Missing Data Analysis:")
+        print("\nMissing Data Analysis:")
         
         # Check for patterns in missing data
         for col in missing_data.index:
@@ -629,7 +629,7 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
     """
     
     if numerical_columns:
-        print("\n🔍 === Outlier Analysis ===")
+        print("\n=== Outlier Analysis ===")
         
         # Create figure for outlier analysis
         fig_num = plt.figure(figsize=(15, 5 * min(len(numerical_columns), 4))).number
@@ -712,5 +712,5 @@ def analyse_single_table(timestamp_columns, categorical_columns, numerical_colum
                     print(f"  • {col}: {outliers_count} outliers ({outliers_percent}%)")
     
     # Return the figure numbers for potential saving
-    print(f"\n✅ Analysis complete! Created {len(created_figures)} analysis figures for {filename}")
+    print(f"\nAnalysis complete! Created {len(created_figures)} analysis figures for {filename}")
     return created_figures

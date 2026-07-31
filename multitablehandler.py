@@ -16,10 +16,10 @@ def visualise_multiple_tables(tables):
     """
 
     if not tables or len(tables) < 2:
-        print("❌ Need at least two tables for multi-table visualization.")
+        print("Need at least two tables for multi-table visualization.")
         return None
     
-    print(f"🔍 Visualizing {len(tables)} tables together...")
+    print(f"Visualizing {len(tables)} tables together...")
     created_figures = []  # Track created figures for return
     
     # Identify column types for each table
@@ -29,7 +29,7 @@ def visualise_multiple_tables(tables):
         categorical_cols = []
         numerical_cols = []
         
-        print(f"\n📊 Processing table {i+1}: {filename}")
+        print(f"\nProcessing table {i+1}: {filename}")
         
         # Identify column types for this table
         for column in df.columns:
@@ -38,7 +38,7 @@ def visualise_multiple_tables(tables):
                     df[column] = pd.to_datetime(df[column])
                     timestamp_cols.append(column)
                 except Exception as e:
-                    print(f"⚠️ Error converting {column} to datetime: {e}")
+                    print(f"Error converting {column} to datetime: {e}")
             elif pd.api.types.is_numeric_dtype(df[column]) or pd.api.types.is_integer_dtype(df[column]) or pd.api.types.is_float_dtype(df[column]):
                 numerical_cols.append(column)
             elif pd.api.types.is_categorical_dtype(df[column]) or df[column].dtype == object:
@@ -52,15 +52,15 @@ def visualise_multiple_tables(tables):
             'numerical_cols': numerical_cols
         })
         
-        print(f"✅ Identified columns in {filename}:")
-        print(f"  ⏱️ Timestamp: {', '.join(timestamp_cols) if timestamp_cols else 'None'}")
-        print(f"  📝 Categorical: {', '.join(categorical_cols) if categorical_cols else 'None'}")
-        print(f"  🔢 Numerical: {', '.join(numerical_cols) if numerical_cols else 'None'}")
+        print(f"Identified columns in {filename}:")
+        print(f"  ⏱Timestamp: {', '.join(timestamp_cols) if timestamp_cols else 'None'}")
+        print(f" Categorical: {', '.join(categorical_cols) if categorical_cols else 'None'}")
+        print(f" Numerical: {', '.join(numerical_cols) if numerical_cols else 'None'}")
     
     # Get user confirmation
-    confirm = input("\n✅ Proceed with these column identifications? (y/n) >>> ").strip().lower()
+    confirm = input("\nProceed with these column identifications? (y/n) >>> ").strip().lower()
     if confirm != 'y':
-        print("🛑 Visualization cancelled.")
+        print("Visualization cancelled.")
         return None
     
 
@@ -74,7 +74,7 @@ def visualise_multiple_tables(tables):
     common_numerical_columns = set.intersection(*all_numerical_columns) if all_numerical_columns else set()
     
     if common_numerical_columns:
-        print(f"\n📈 Found {len(common_numerical_columns)} common numerical columns across all tables")
+        print(f"\nFound {len(common_numerical_columns)} common numerical columns across all tables")
         
         # Create a new figure for distribution comparisons
         fig_num = plt.figure(figsize=(15, 12)).number
@@ -110,7 +110,7 @@ def visualise_multiple_tables(tables):
         plt.tight_layout()
         plt.suptitle("Distribution Comparison of Common Numerical Columns", fontsize=16, y=1.02)
     else:
-        print("ℹ️ No common numerical columns found across all tables.")
+        print("ℹNo common numerical columns found across all tables.")
     
 
     """
@@ -119,7 +119,7 @@ def visualise_multiple_tables(tables):
 
     """
 
-    print("\n🔍 Looking for columns with similar statistical properties...")
+    print("\nLooking for columns with similar statistical properties...")
     
     # Create dictionary of column statistics for all numerical columns
     column_stats = {}
@@ -206,9 +206,9 @@ def visualise_multiple_tables(tables):
         plt.tight_layout()
         plt.suptitle("Similar Numerical Columns Across Tables", fontsize=16, y=1.02)
         
-        print(f"📊 Found {len(similar_columns)} pairs of similar columns, showing top {len(visualized_pairs)}")
+        print(f"Found {len(similar_columns)} pairs of similar columns, showing top {len(visualized_pairs)}")
     else:
-        print("ℹ️ No similar numerical columns found across tables.")
+        print("ℹNo similar numerical columns found across tables.")
     
     """
 
@@ -221,7 +221,7 @@ def visualise_multiple_tables(tables):
     common_categorical_columns = set.intersection(*all_categorical_columns) if all_categorical_columns else set()
     
     if common_categorical_columns:
-        print(f"\n📊 Found {len(common_categorical_columns)} common categorical columns across all tables")
+        print(f"\nFound {len(common_categorical_columns)} common categorical columns across all tables")
         
         # Create a new figure for categorical comparisons
         fig_num = plt.figure(figsize=(15, 15)).number
@@ -231,7 +231,7 @@ def visualise_multiple_tables(tables):
         for column in common_categorical_columns:
             # Skip if too many categories
             if any(processed_tables[i]['df'][column].nunique() > 10 for i in range(len(processed_tables))):
-                print(f"⚠️ Skipping {column} - too many categories")
+                print(f"Skipping {column} - too many categories")
                 continue
                 
             if plot_count >= 3:  # Limit to 3 plots
@@ -288,7 +288,7 @@ def visualise_multiple_tables(tables):
     tables_with_timestamps = [table for table in processed_tables if table['timestamp_cols']]
     
     if len(tables_with_timestamps) >= 2:
-        print("\n📈 Comparing time series data across tables...")
+        print("\nComparing time series data across tables...")
         
         # Create a new figure for time series comparisons
         fig_num = plt.figure(figsize=(15, 12)).number
@@ -358,11 +358,11 @@ def visualise_multiple_tables(tables):
         else:
             plt.close()
             created_figures.remove(fig_num)
-            print("ℹ️ No suitable time series comparisons found.")
+            print("ℹNo suitable time series comparisons found.")
     
     # Show all plots
     plt.tight_layout()
-    print(f"\n✅ Created {len(created_figures)} visualization figures")
+    print(f"\nCreated {len(created_figures)} visualization figures")
     
     return created_figures
 
@@ -374,10 +374,10 @@ def analyse_multiple_tables(tables):
     """
 
     if not tables or len(tables) < 2:
-        print("❌ Need at least two tables for multi-table analysis.")
+        print("Need at least two tables for multi-table analysis.")
         return None
     
-    print(f"🔍 Analyzing {len(tables)} tables together...")
+    print(f"Analyzing {len(tables)} tables together...")
     created_figures = []  # Track created figures for return
     
     # Identify column types for each table (similar to visualization function)
@@ -387,7 +387,7 @@ def analyse_multiple_tables(tables):
         categorical_cols = []
         numerical_cols = []
         
-        print(f"\n📊 Processing table {i+1}: {filename}")
+        print(f"\nProcessing table {i+1}: {filename}")
         
         # Identify column types for this table
         for column in df.columns:
@@ -396,7 +396,7 @@ def analyse_multiple_tables(tables):
                     df[column] = pd.to_datetime(df[column])
                     timestamp_cols.append(column)
                 except Exception as e:
-                    print(f"⚠️ Error converting {column} to datetime: {e}")
+                    print(f"Error converting {column} to datetime: {e}")
             elif pd.api.types.is_numeric_dtype(df[column]) or pd.api.types.is_integer_dtype(df[column]) or pd.api.types.is_float_dtype(df[column]):
                 numerical_cols.append(column)
             elif pd.api.types.is_categorical_dtype(df[column]) or df[column].dtype == object:
@@ -410,15 +410,15 @@ def analyse_multiple_tables(tables):
             'numerical_cols': numerical_cols
         })
         
-        print(f"✅ Identified columns in {filename}:")
-        print(f"  ⏱️ Timestamp: {', '.join(timestamp_cols) if timestamp_cols else 'None'}")
-        print(f"  📝 Categorical: {', '.join(categorical_cols) if categorical_cols else 'None'}")
-        print(f"  🔢 Numerical: {', '.join(numerical_cols) if numerical_cols else 'None'}")
+        print(f"Identified columns in {filename}:")
+        print(f"  ⏱Timestamp: {', '.join(timestamp_cols) if timestamp_cols else 'None'}")
+        print(f" Categorical: {', '.join(categorical_cols) if categorical_cols else 'None'}")
+        print(f" Numerical: {', '.join(numerical_cols) if numerical_cols else 'None'}")
     
     # Get user confirmation
-    confirm = input("\n✅ Proceed with these column identifications? (y/n) >>> ").strip().lower()
+    confirm = input("\nProceed with these column identifications? (y/n) >>> ").strip().lower()
     if confirm != 'y':
-        print("🛑 Analysis cancelled.")
+        print("Analysis cancelled.")
         return None
     
     """
@@ -432,7 +432,7 @@ def analyse_multiple_tables(tables):
     common_numerical_columns = set.intersection(*all_numerical_columns) if all_numerical_columns else set()
     
     if common_numerical_columns:
-        print(f"\n📈 === Statistical Comparison of Common Numerical Columns ===")
+        print(f"\n=== Statistical Comparison of Common Numerical Columns ===")
         
         # Create a figure for boxplot comparisons
         fig_num = plt.figure(figsize=(15, 5 * min(len(common_numerical_columns), 3))).number
@@ -442,7 +442,7 @@ def analyse_multiple_tables(tables):
         for i, column in enumerate(list(common_numerical_columns)[:3]):  # Limit to 3
             plt.subplot(min(len(common_numerical_columns), 3), 1, i+1)
             
-            print(f"\n📊 Statistics for '{column}':")
+            print(f"\nStatistics for '{column}':")
             column_stats = []
             data = []
             labels = []
@@ -539,7 +539,7 @@ def analyse_multiple_tables(tables):
         plt.tight_layout()
         plt.suptitle("Statistical Comparison of Numerical Columns", fontsize=16, y=1.02)
     else:
-        print("\nℹ️ No common numerical columns found across all tables.")
+        print("\nℹNo common numerical columns found across all tables.")
     
 
     """
@@ -548,7 +548,7 @@ def analyse_multiple_tables(tables):
 
     """
 
-    print("\n🔄 === Correlation Patterns Comparison ===")
+    print("\n=== Correlation Patterns Comparison ===")
     
     # Create a figure for correlation matrices
     if any(len(table['numerical_cols']) >= 2 for table in processed_tables):
@@ -566,7 +566,7 @@ def analyse_multiple_tables(tables):
                 
                 # Calculate correlation matrix
                 correlation_matrix = table['df'][table['numerical_cols']].corr()
-                print(f"\n📊 Correlation matrix for {table['filename']}:")
+                print(f"\nCorrelation matrix for {table['filename']}:")
                 print(correlation_matrix.round(2))
                 
                 # Create mask for upper triangle
@@ -614,7 +614,7 @@ def analyse_multiple_tables(tables):
     common_categorical_columns = set.intersection(*all_categorical_columns) if all_categorical_columns else set()
     
     if common_numerical_columns and common_categorical_columns:
-        print("\n📊 === Categorical-Numerical Relationships ===")
+        print("\n=== Categorical-Numerical Relationships ===")
         
         # Filter to categorical columns with reasonable number of categories
         usable_cat_cols = [col for col in common_categorical_columns 
@@ -670,7 +670,7 @@ def analyse_multiple_tables(tables):
             cat_num_pairs = cat_num_pairs[:2]  # Limit to top 2
             
             if cat_num_pairs:
-                print(f"📊 Found {len(cat_num_pairs)} strong categorical-numerical relationships")
+                print(f"Found {len(cat_num_pairs)} strong categorical-numerical relationships")
                 
                 for i, (cat_col, num_col, effect) in enumerate(cat_num_pairs):
                     plt.subplot(len(cat_num_pairs), 1, i+1)
@@ -697,7 +697,7 @@ def analyse_multiple_tables(tables):
                                 
                             ax.tick_params(axis='x', rotation=45)
                         except Exception as e:
-                            print(f"⚠️ Error creating boxplot for {table['filename']}: {e}")
+                            print(f"Error creating boxplot for {table['filename']}: {e}")
                     
                     # Add overall title
                     fig.suptitle(f'Distribution of {num_col} by {cat_col} (Effect: {effect:.2f})', fontsize=14)
@@ -707,7 +707,7 @@ def analyse_multiple_tables(tables):
                     created_figures.append(fig.number)
                     
                     # Print analysis of the relationship
-                    print(f"\n📊 Analysis of {num_col} by {cat_col}:")
+                    print(f"\nAnalysis of {num_col} by {cat_col}:")
                     print(f"  • Overall effect size: {effect:.2f} ({get_effect_strength(effect)})")
                     
                     for table in processed_tables:
@@ -723,11 +723,11 @@ def analyse_multiple_tables(tables):
                             print(f"    - Lowest {num_col} in {cat_col}='{bottom_cat}' (avg: {category_means.min():.2f})")
                             print(f"    - Difference: {diff_pct:.1f}% from mean")
             else:
-                print("ℹ️ No strong categorical-numerical relationships found")
+                print("ℹNo strong categorical-numerical relationships found")
                 plt.close()
                 created_figures.remove(fig_num)
         else:
-            print("ℹ️ No suitable categorical columns for analysis (too many categories)")
+            print("ℹNo suitable categorical columns for analysis (too many categories)")
     
     """
 
@@ -735,7 +735,7 @@ def analyse_multiple_tables(tables):
 
     """
     
-    print("\n🔍 === Missing Values Comparison ===")
+    print("\n=== Missing Values Comparison ===")
     
     # Create a DataFrame to compare missing values percentage across tables
     missing_comparison = pd.DataFrame()
@@ -748,7 +748,7 @@ def analyse_multiple_tables(tables):
     # Only show rows with at least some missing values
     missing_rows = (missing_comparison > 0).any(axis=1)
     if missing_rows.any():
-        print("\n📊 Missing values by column:")
+        print("\nMissing values by column:")
         print(missing_comparison[missing_rows].round(2))
         
         # Create a figure for missing values comparison
@@ -764,7 +764,7 @@ def analyse_multiple_tables(tables):
         plt.legend(title='Table')
         
         # Add summary of missing data
-        print("\n📊 Missing data summary:")
+        print("\nMissing data summary:")
         for table in processed_tables:
             total_missing = table['df'].isnull().sum().sum()
             total_cells = table['df'].size
@@ -786,10 +786,10 @@ def analyse_multiple_tables(tables):
         
         plt.tight_layout()
     else:
-        print("ℹ️ No missing values found in any table.")
+        print("ℹNo missing values found in any table.")
     
     # Return created figures for saving
-    print(f"\n✅ Analysis complete! Created {len(created_figures)} analysis figures")
+    print(f"\nAnalysis complete! Created {len(created_figures)} analysis figures")
     return created_figures
 
 
